@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>AI GMV</title>
+  </head>
+  <body>
+    <div id="talk"></div>
+    <div class="in">
+      <input id="input">
+      <button id="sned">Sned</button>
+    </div>
+    <script>
+      function addMessage(text) {
+        document.getElementById('talk').insertAdjacentHTML('beforeend', text)
+      }
+      function ask(input) {
+        fetch('https://chatbot.appinventor.mit.edu/chat/v1', {
+          method: 'POST',
+          body: JSON.stringify({
+            "message": input
+          })
+        })
+          .then(res=>res.json())
+          .then(res=>addMessage(res.response));
+      }
+      document.getElementById('sned').onclick = ()=>{
+        ask(document.getElementById('input').value);
+      }
+    </script>
+  </body>
+</html>
