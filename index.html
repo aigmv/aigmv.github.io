@@ -27,7 +27,7 @@
         .then(res => {
           document.getElementById('models').innerHTML = res.data
             .filter(model=>model.type==="chat.completions")
-            .map(model=>`<option>${model.id}</option>`)ˋ
+            .map(model=>`<option>${model.id}</option>`)
             .join('');
       });
       function addMessage(text) {
