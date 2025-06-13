@@ -30,11 +30,16 @@
             .map(model=>`<option>${model.id}</option>`)
             .join('');
       });
+      let messages = [];
       function addMessage(text) {
         document.getElementById('talk').insertAdjacentHTML('beforeend', '<p>'+text+'</p>')
       }
       function ask(input) {
         addMessage(input);
+        messages.push({
+          role: "user",
+          content: input
+        });
         fetch('https://api.fsh.plus/request?url='+encodeURIComponent(api+'/chat/completions'), {
           method: 'POST',
           body: JSON.stringify({
@@ -47,18 +52,19 @@
             body: JSON.stringify({
               model: document.getElementById('models').value,
               temperature: 1,
-              messages: [{
-                role: "user",
-                content: input
-              }]
+              messages: messages
             })
           })
         })
           .then(res=>res.json())
           .then(res=>{
             res = JSON.parse(res.content);
-console.log(JSON.stringify(res))
-            addMessage(res.choices[0].message.content);
+            res = res.choices[0].message.content;
+            addMessage(res);
+            messages.push({
+              role: 'assistant',
+              content: res
+            })
           });
       }
       document.getElementById('sned').onclick = ()=>{
