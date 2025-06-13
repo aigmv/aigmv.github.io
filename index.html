@@ -34,7 +34,11 @@
           })
         })
           .then(res=>res.json())
-          .then(res=>addMessage(JSON.stringify(res.content).choices[0].content));
+          .then(res=>{
+            res = JSON.stringify(res.content);
+console.log(JSON.stringify(res))
+            addMessage(res.choices[0].content)
+          });
       }
       document.getElementById('sned').onclick = ()=>{
         ask(document.getElementById('input').value);
