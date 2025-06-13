@@ -14,10 +14,23 @@
         document.getElementById('talk').insertAdjacentHTML('beforeend', text)
       }
       function ask(input) {
-        fetch('https://chatbot.appinventor.mit.edu/chat/v1', {
+        fetch('https://api.fsh.plus/request?url='+encodeURIComponent('https://ai.aerioncloud.com/v1/chat/completions'), {
           method: 'POST',
           body: JSON.stringify({
-            "message": input
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Origin': 'https://gptcall.net/',
+              'Referer': 'https://gptcall.net/'
+            },
+            body: JSON.stringify({
+              model: 'gpt-4o',
+              temperature: 1,
+              messages: [{
+                role: "user",
+                content: input
+              }]
+            })
           })
         })
           .then(res=>res.json())
