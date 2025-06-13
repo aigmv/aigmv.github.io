@@ -35,9 +35,9 @@
         })
           .then(res=>res.json())
           .then(res=>{
-            res = JSON.stringify(res.content);
+            res = JSON.parse(res.content);
 console.log(JSON.stringify(res))
-            addMessage(res.choices[0].content)
+            addMessage(res.choices[0].message.content);
           });
       }
       document.getElementById('sned').onclick = ()=>{
